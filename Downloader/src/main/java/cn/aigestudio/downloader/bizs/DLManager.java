@@ -154,7 +154,33 @@ public final class DLManager {
         DLCons.DEBUG = isDebug;
         return sManager;
     }
-
+    /**
+     * check that if url is downloading now or not.
+     * @param url that checking is about it.
+     * @return if is downloading return true else return false.
+     */
+    public boolean dlIsDownloading(String url)
+    { 
+        if (TextUtils.isEmpty(url)) {
+            if (hasListener) listener.onError(ERROR_INVALID_URL, "Url can not be null.");
+            return;
+        }
+        return TASK_DLING.containsKey(url) || POOL_TASK.containsKey(url);
+    }
+    
+     /**
+     * check that if url is stoped or not.
+     * @param url that checking is about it.
+     * @return true if is stoped or return false.
+     */
+    public boolean dlIsStoped(String url)
+    { 
+        if (TextUtils.isEmpty(url)) {
+            if (hasListener) listener.onError(ERROR_INVALID_URL, "Url can not be null.");
+            return;
+        }
+        return TASK_STOPPED.containsKey(url);
+    }
     /**
      * @see #dlStart(String, String, String, List, IDListener)
      */
